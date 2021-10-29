@@ -10,10 +10,7 @@ import string
 import os
 
 
-beg_pattern='*#-:=.,)/% '
-end_pattern=':=.,(/%!? '
-
-def _normalize_str(_string_, beg_pattern='"*#-:=.,)/% ', end_pattern='"":=.,(/%!? ', min_upper=4):
+def _normalize_str(_string_: str, beg_pattern='"*#-:=.,)/% ', end_pattern='"":=.,(/%!? ', min_upper=4):
     '''
     (1) Lowercase 
     (2) Remove extra whitespaces from given string
@@ -71,13 +68,28 @@ def filter_annotations(_string_, stpw):
     
     return _string_
 
-def load_corpus(path):
+def load_corpus(path: str):
+    """
+    Load corpus
+
+    Parameters
+    ----------
+    path : str
+        Path to folder with corpus. One text document per document in corpus. 
+        Document name is the identifier.
+
+    Returns
+    -------
+    corpus_dict : dict
+        Dictionary with the corpus. Key: document name, value: string with
+        document content.
+
+    """
     print(f"Loading corpus from {path}...")
     corpus_dict = {}
     for txt in os.listdir(path):
         if '.txt' not in txt:
             continue
         corpus_dict[txt] = _normalize_str(open(os.path.join(path, txt)).read(), min_upper=5)
-    all_txt_cat =  " ". join([str(text) for text in corpus_dict.values()])
     
-    return corpus_dict, all_txt_cat
+    return corpus_dict

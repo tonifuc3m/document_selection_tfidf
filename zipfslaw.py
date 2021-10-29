@@ -127,7 +127,24 @@ def print_zipf_table(zipf_table):
 import numpy as np
 from matplotlib import pyplot as plt
 import os
-def zipfs(TF, outpath_general, labels):
+def zipfs(TF: dict, outpath_general: str, labels: list):
+    """
+    Generate and save images of ZIPFs tables
+
+    Parameters
+    ----------
+    TF : dict
+        DESCRIPTION.
+    outpath_general : str
+        DESCRIPTION.
+    labels : list
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
     for label in labels:
         zipfstable = generate_zipf_table(' '.join(TF[label]), 
                                          len(set(TF[label])))

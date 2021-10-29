@@ -36,12 +36,20 @@ def argarser():
     
     return source_path, target_path, output_path, relevant_labels
     
-def compute_metrics(source_path, target_path, outpath_general, relevant_labels):
-    """   
+def compute_metrics(source_path: str, target_path: str, outpath_general: str, relevant_labels: list):
+    """
+    
+
     Parameters
     ----------
-    source_path : TYPE
-        DESCRIPTION.
+    source_path : str
+        Path to source annotated corpus in Brat standoff format.
+    target_path : str
+        Path to target corpus.
+    outpath_general : str
+        Output folder where we will store all variables.
+    relevant_labels : list
+        Labels we parse from annotations.
 
     Returns
     -------
@@ -63,12 +71,12 @@ def compute_metrics(source_path, target_path, outpath_general, relevant_labels):
         zipfs(TF_source, outpath_general, relevant_labels)
         
     # Load target corpus
-    corpus_dict, all_txt_cat = load_corpus(target_path)
+    corpus_dict, _ = load_corpus(target_path)
     
     # Get TF in source corpus
     TF_target_outpath = os.path.join(outpath_general, 'TF_target.json')
     TF_target = get_TF.main(TF_target_outpath, labels=relevant_labels, TF_source=TF_source,
-                            target_corpus=all_txt_cat, corpus='target')
+                            target_corpus=corpus_dict, corpus='target')
     
     # Get iDF
     iDF_outpath = os.path.join(outpath_general, 'iDF_target.json')
@@ -101,5 +109,5 @@ if __name__ == '__main__':
     
     # Find relevant documents
     select_documents.main(os.path.join(outpath_general, 'score1_sum.json'), 
-                          outpath_general, 'top', top=500)
+                          outpath_general, 'top', top=12580)
 
